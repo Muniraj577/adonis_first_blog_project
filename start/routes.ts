@@ -26,4 +26,11 @@ Route.get('/', async ({ view }) => {
 
 Route.group(() => {
   Route.get('dashboard', 'DashboardController.dashboard').as('dashboard');
+  Route.group(() => {
+    Route.get('', 'UsersController.index').as('index');
+    Route.get('store', 'UsersController.store').as('store');
+    Route.get('update', 'UsersController.update').as('update');
+    Route.get('store-users', 'UsersController.storeUser').as('storeUser');
+    Route.get('delete-user/:id', 'UsersController.delete').as('delete');
+  }).prefix('user/').as('user');
 }).prefix('admin/').as('admin').namespace('App/Controllers/Http/Admin');
