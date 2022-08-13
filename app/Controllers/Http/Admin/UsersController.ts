@@ -1,7 +1,6 @@
 // import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import User from "App/Models/User";
-import {res} from "pino-std-serializers";
 
 export default class UsersController {
   public async index({response}) {
