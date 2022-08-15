@@ -1,6 +1,108 @@
-<script src="../assets/plugins/jquery/jquery.min.js"></script>
+<script src="../assets/js/jquery.min.js"></script>
+<script src="../assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/admin/plugins/chart.js/Chart.min.js"></script>
+<script src="../assets/admin/plugins/moment/moment.min.js"></script>
+<script src="../assets/admin/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="../assets/admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<script src="../assets/admin/dist/js/adminlte.js"></script>
+<script src="../assets/admin/js/datatables.min.js"></script>
+<script src="../assets/admin/js/datatables.buttons.min.js"></script>
+<script src="../assets/admin/js/jszip.min.js"></script>
+<script src="../assets/admin/js/pdfmake.min.js"></script>
+<script src="../assets/admin/js/vfs_fonts.js"></script>
+<script src="../assets/admin/js/buttons.html5.min.js"></script>
+<script src="../assets/admin/js/buttons.print.min.js"></script>
+<script src="../assets/admin/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../assets/admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="../assets/admin/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="../assets/admin/plugins/select2/js/select2.full.min.js"></script>
+<script src="../assets/admin/plugins/sweetalert2/sweetalert2.all.js"></script>
+<script src="../assets/js/toastr.min.js"></script>
+<script src="../assets/js/jquery-ui.js"></script>
 
-<script src="../assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script>
+    var update = function() {
+        document.getElementById("display_time")
+            .innerHTML = moment().format('YYYY-MM-DD h:mm a');
+    }
 
-<script src="../assets/dist/js/adminlte.min.js?v=3.2.0"></script>
+    // $.ajaxSetup({
+    //     headers: {
+    //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //     }
+    // });
 
+    function showImg(img, previewId) {
+        readInputURL(img, previewId);
+    }
+
+    function readInputURL(input, idName) {
+        if (input.files && input.files[0]) {
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                $("#" + idName).attr('src', e.target.result).width(100).height(100);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function dataTablePosition() {
+        $('.buttons-collection').detach().appendTo('.dataTables_filter');
+    }
+
+
+    var today = new Date();
+    var today_date = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today
+        .getDate()).slice(-2);
+    $(document).ready(function() {
+        setInterval(update, 1000);
+        $(".alert-warning").css('display', 'none');
+        $(".select2").select2();
+    });
+
+
+    function deleteData($_id, $_action){
+        $.ajax({
+            url: $_action,
+            type: 'POST',
+            data: {'id': $_id, '_method': 'DELETE'},
+            success: function(data){
+                if(data.error){
+                    toastr.warning(data.error);
+                } else if(data.db_error){
+                    toastr.warning(data.db_error);
+                } else if(!data.error && !data.db_error){
+                    toastr.success(data.msg);
+                    if(data.redirectRoute){
+                        location.href = data.redirectRoute;
+                    }
+                }
+
+            },
+            error: function(xhr){
+                console.log(xhr.responseJSON);
+            }
+        });
+    }
+
+</script>
+<script>
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-container",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+
+</script>
