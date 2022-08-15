@@ -32,5 +32,8 @@ Route.group(() => {
     Route.get('update', 'UsersController.update').as('update');
     Route.get('store-users', 'UsersController.storeUser').as('storeUser');
     Route.get('delete-user/:id', 'UsersController.delete').as('delete');
-  }).prefix('user/').as('user').namespace('App/Controllers/Http/Admin');
+  }).prefix('user/').as('user');
+  Route.group(() => {
+    Route.get('', 'RolesController.index').as('index');
+  }).prefix('role/').as('role');
 }).prefix('admin/').as('admin').namespace('App/Controllers/Http/Admin');

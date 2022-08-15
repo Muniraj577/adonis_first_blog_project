@@ -1,0 +1,114 @@
+@layout('layouts/admin/master')
+@set('title', 'Roles')
+@section('body')
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row col-12 mb-2">
+                <div class="col-sm-6">
+                    <h1>All Roles</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title float-right">
+                                <a href="javascript:void(0)" class="btn btn-primary">
+                                    <i class="fas fa-plus"></i> Add Role
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table id="Role" class="table table-responsive-xl">
+                                <thead>
+                                    <tr>
+                                        <th>S.N</th>
+                                        <th>Name</th>
+                                        <th>Slug</th>
+
+                                        <th class="hidden">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @each ((role, index) in roles)
+                                        <tr>
+                                            <td>{{ index + 1}}</td>
+                                            <td>{{ role.name }}</td>
+                                            <td>{{ role.slug }}</td>
+                                            <td>
+                                              @if (role.name != 'Admin')
+                                                  <div class="d-inline-flex">
+                                                      <a href="javascript:void(0)"
+                                                          class="btn btn-primary btn-sm" title="Edit Role">
+                                                          Edit
+                                                      </a>
+                                                  </div>
+                                              @end
+                                          </td>
+                                        </tr>
+                                    @end
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+@end
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $("#Role").DataTable({
+                "responsive": false,
+                "autoWidth": false,
+
+                "processing": true,
+                "dom": 'lBfrtip',
+                "buttons": [{
+                        extend: 'collection',
+                        text: "<i class='fa fa-ellipsis-v'></i>",
+                        buttons: [{
+                                extend: 'copy',
+                                exportOptions: {
+                                    columns: 'th:not(:last-child)'
+                                }
+                            },
+                            {
+                                extend: 'pdf',
+
+                                exportOptions: {
+                                    columns: 'th:not(:last-child)'
+                                }
+                            },
+                            {
+                                extend: 'print',
+
+                                exportOptions: {
+                                    columns: 'th:not(:last-child)'
+                                },
+
+                            },
+                        ],
+
+                    },
+                    {
+                        extend: 'colvis',
+                        columns: ':not(.hidden)'
+                    }
+                ],
+
+                "language": {
+                    "infoEmpty": "No entries to show",
+                    "emptyTable": "No data available",
+                    "zeroRecords": "No records to display",
+                }
+            });
+            dataTablePosition();
+        });
+    </script>
+@end
