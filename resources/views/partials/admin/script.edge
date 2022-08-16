@@ -105,4 +105,30 @@
         "hideMethod": "fadeOut"
     };
 
+
+
+
+
+</script>
+<script>
+  @if (flashMessages.has('success'))
+      var type = "{{ flashMessages.get('alert-type', 'info') }}";
+        switch (type) {
+        case 'info':
+        toastr.info("{{ flashMessages.get('success') }}");
+        break;
+
+        case 'warning':
+        toastr.warning("{{ flashMessages.get('success') }}");
+        break;
+
+        case 'success':
+        toastr.success("{{ flashMessages.get('success') }}");
+        break;
+
+        case 'error':
+        toastr.error("{{ flashMessages.get('success') }}");
+        break;
+        }
+    @end
 </script>

@@ -36,4 +36,9 @@ Route.group(() => {
   Route.group(() => {
     Route.get('', 'RolesController.index').as('index');
   }).prefix('role/').as('role');
+  Route.group(() => {
+    Route.get('', 'PermissionsController.index').as('index');
+    Route.get('create', 'PermissionsController.create').as('create');
+    Route.post('store', 'PermissionsController.store').as('store');
+  }).prefix('permission/').as('permission');
 }).prefix('admin/').as('admin').namespace('App/Controllers/Http/Admin');

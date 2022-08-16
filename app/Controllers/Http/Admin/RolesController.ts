@@ -13,6 +13,6 @@ export default class RolesController {
   }
 
   public async create({view}){
-
+    return view.render(this.$page+'create');
   }
 }

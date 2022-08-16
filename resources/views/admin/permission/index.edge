@@ -1,0 +1,103 @@
+@layout('layouts/admin/master')
+@set('title', 'Permission')
+@section('body')
+<section class="content-header">
+<div class="container-fluid">
+    <div class="row col-12 mb-2">
+        <div class="col-sm-6">
+            <h1>All Permissions</h1>
+        </div>
+    </div>
+</div>
+</section>
+<section class="content">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title float-right">
+                        <a href="{{ route('admin.permission.create') }}" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Add Permission
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table id="Permission" class="table table-responsive-xl">
+                        <thead>
+                            <tr>
+                                <th>S.N</th>
+                                <th>Name</th>
+                                <th>Slug</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           @each((permission, index) in permissions)
+                           <tr>
+                            <td>{{ index + 1 }}</td>
+                            <td>{{ permission.name }}</td>
+                            <td>{{ permission.slug }}</td>
+                           </tr>
+                           @end
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+@endsection
+@section('scripts')
+<script>
+    $(document).ready(function() {
+        $("#Permission").DataTable({
+            "responsive": false,
+            "autoWidth": false,
+            "processing": true,
+            "dom": 'lBfrtip',
+            "buttons": [{
+                    extend: 'collection',
+                    text: "<i class='fa fa-ellipsis-v'></i>",
+                    buttons: [{
+                            extend: 'copy',
+                            exportOptions: {
+                                columns: 'th:not(:last-child)'
+                            }
+                        },
+                        {
+                            extend: 'pdf',
+
+                            exportOptions: {
+                                columns: 'th:not(:last-child)'
+                            }
+                        },
+                        {
+                            extend: 'print',
+
+                            exportOptions: {
+                                columns: 'th:not(:last-child)'
+                            },
+
+                        },
+                    ],
+
+                },
+                {
+                    extend: 'colvis',
+                    columns: ':not(.hidden)'
+                }
+            ],
+
+            "language": {
+                "infoEmpty": "No entries to show",
+                "emptyTable": "No data available",
+                "zeroRecords": "No records to display",
+            }
+        });
+        dataTablePosition();
+    });
+
+
+</script>
+@endsection
