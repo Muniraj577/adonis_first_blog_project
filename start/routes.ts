@@ -40,5 +40,7 @@ Route.group(() => {
     Route.get('', 'PermissionsController.index').as('index');
     Route.get('create', 'PermissionsController.create').as('create');
     Route.post('store', 'PermissionsController.store').as('store');
+    Route.get('edit/:id', 'PermissionsController.edit').as('edit');
+    Route.put('update/:id', 'PermissionsController.update').as('update');
   }).prefix('permission/').as('permission');
 }).prefix('admin/').as('admin').namespace('App/Controllers/Http/Admin');

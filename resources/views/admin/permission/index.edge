@@ -1,56 +1,69 @@
 @layout('layouts/admin/master')
 @set('title', 'Permission')
+@set('permission', 'active')
 @section('body')
 <section class="content-header">
-<div class="container-fluid">
+  <div class="container-fluid">
     <div class="row col-12 mb-2">
-        <div class="col-sm-6">
-            <h1>All Permissions</h1>
-        </div>
+      <div class="col-sm-6">
+        <h1>All Permissions</h1>
+      </div>
     </div>
-</div>
+  </div>
 </section>
 <section class="content">
-<div class="container-fluid">
+  <div class="container-fluid">
     <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-title float-right">
-                        <a href="{{ route('admin.permission.create') }}" class="btn btn-primary">
-                            <i class="fas fa-plus"></i> Add Permission
-                        </a>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <table id="Permission" class="table table-responsive-xl">
-                        <thead>
-                            <tr>
-                                <th>S.N</th>
-                                <th>Name</th>
-                                <th>Slug</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                           @each((permission, index) in permissions)
-                           <tr>
-                            <td>{{ index + 1 }}</td>
-                            <td>{{ permission.name }}</td>
-                            <td>{{ permission.slug }}</td>
-                           </tr>
-                           @end
-                        </tbody>
-                    </table>
-                </div>
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title float-right">
+              <a href="{{ route('admin.permission.create') }}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Add Permission
+              </a>
             </div>
+          </div>
+          <div class="card-body">
+            <table id="Permission" class="table table-responsive-xl">
+              <thead>
+                <tr>
+                  <th>S.N</th>
+                  <th>Name</th>
+                  <th>Slug</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                @each((permission, index) in permissions)
+                <tr>
+                  <td>{{ index + 1 }}</td>
+                  <td>{{ permission.name }}</td>
+                  <td>{{ permission.slug }}</td>
+                  <td>
+                    <a href="{{ route('admin.permission.edit', {id: permission.id}) }}" class="btn btn-sm btn-blue"
+                      title="Edit Permission">
+                      <i class="fa fa-edit iCheck"></i>
+                    </a>
+                    {{--  <button type="button"
+                      onclick="deleteData({{ $parentCategory->id }}, '{{ route('admin.category.delete', $parentCategory->id) }}')"
+                      class="btn btn-sm btn-red ml-2" title="Delete Category">
+                      <i class="fa fa-trash iCheck"></i>
+                    </button>  --}}
+                  </td>
+                </tr>
+                @end
+              </tbody>
+            </table>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 </section>
 @endsection
 @section('scripts')
 <script>
-    $(document).ready(function() {
+  $(document).ready(function() {
         $("#Permission").DataTable({
             "responsive": false,
             "autoWidth": false,
