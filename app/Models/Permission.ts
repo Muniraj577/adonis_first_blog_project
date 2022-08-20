@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import { slugify } from '@ioc:Adonis/Addons/LucidSlugify'
+import Role from './Role'
 
 export default class Permission extends BaseModel {
   @column({ isPrimary: true })
@@ -21,4 +22,10 @@ export default class Permission extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+
+  @manyToMany(() => Role, {
+    pivotTable: 'role_permissions'
+  })
+  public roles: ManyToMany<typeof Role>
 }

@@ -35,6 +35,10 @@ Route.group(() => {
   }).prefix('user/').as('user');
   Route.group(() => {
     Route.get('', 'RolesController.index').as('index');
+    Route.get('create', 'RolesController.create').as('create')
+    Route.post('store', 'RolesController.store').as('store')
+    Route.get('edit/:id', 'RolesController.edit').as('edit')
+    Route.put('update/:id', 'RolesController.update').as('update')
   }).prefix('role/').as('role');
   Route.group(() => {
     Route.get('', 'PermissionsController.index').as('index');
