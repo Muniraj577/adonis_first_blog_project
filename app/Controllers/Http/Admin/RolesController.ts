@@ -31,4 +31,17 @@ export default class RolesController {
     session.flash('success', 'Role created successfully')
     response.redirect().toRoute('admin.role.index')
   }
+
+  public async edit({view, params}) {
+    const role = await Role.query().where('id', params.id).preload('permissions').firstOrFail();
+    console.log(role.$preloaded.permissions);
+    // const relatedPermissions = await role.related('permissions').query();
+    // console.table(relatedPermissions);
+    return view.render(this.$page+"edit", {
+      role: role,
+      // relatedPermissions: relatedPermissions,
+      permissions: await Permission.all(),
+    });
+
+  }
 }

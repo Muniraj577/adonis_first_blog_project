@@ -43,7 +43,7 @@
                                             <td>
                                               @if (role.name != 'Admin')
                                                   <div class="d-inline-flex">
-                                                      <a href="javascript:void(0)"
+                                                      <a href="{{route('admin.role.edit', {id: role.id})}}"
                                                           class="btn btn-primary btn-sm" title="Edit Role">
                                                           Edit
                                                       </a>

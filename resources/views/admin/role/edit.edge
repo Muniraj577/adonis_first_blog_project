@@ -1,0 +1,89 @@
+@layout('layouts/admin/master')
+@set('title', 'Role')
+@set('role_tab', 'active')
+@section('body')
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row col-12 mb-2">
+      <div class="col-sm-6">
+        <h1>Edit Role</h1>
+      </div>
+
+    </div>
+  </div>
+</section>
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title float-right">
+              <a href="{{ route('admin.role.index') }}" class="btn btn-primary">
+                <i class="fa fa-arrow-left"></i> Back to List
+              </a>
+            </div>
+          </div>
+          <div class="card-body">
+            <form action="{{ route('admin.role.store') }}" method="POST" enctype="multipart/form-data" id="form">
+              {{ csrfField() }}
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <p class="db_error"></p>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <label for="name">Name&nbsp;<span class="req">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                          <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                            value="{{ flashMessages.get('name', '') }}">
+                          <span class="require name text-danger">{{ flashMessages.has('errors.name') ?
+                            flashMessages.get('errors.name') : '' }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="permissions">Assign Permissions&nbsp;<span class="req">*</span></label>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="row">
+                            @each ((permission, index) in permissions)
+                            <div class="col-md-4 form-check">
+                              <input type="checkbox" value="{{ permission.id}}" class="form-check-input permission"
+                                name="permissions[]">
+                              <label for="">{{ permission.name }}</label>
+                            </div>
+                            @end
+                          </div>
+                          <span class="require permissions text-danger">{{ flashMessages.has('errors.permissions') ?
+                            flashMessages.get('errors.permissions') : '' }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+@end
+@section('scripts')
+<script>
+
+</script>
+@end
