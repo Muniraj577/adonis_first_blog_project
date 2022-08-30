@@ -1,5 +1,6 @@
 // import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
+import Database from "@ioc:Adonis/Lucid/Database";
 import Permission from "App/Models/Permission";
 import Role from "App/Models/Role";
 import RoleValidator from "App/Validators/RoleValidator";
@@ -33,13 +34,12 @@ export default class RolesController {
   }
 
   public async edit({view, params}) {
-    const role = await Role.query().where('id', params.id).preload('permissions').firstOrFail();
-    console.log(role.$preloaded.permissions);
-    // const relatedPermissions = await role.related('permissions').query();
-    // console.table(relatedPermissions);
+    const role = await Role.findOrFail(params.id);
+    var permission_ids = await Database.from('role_permissions').select('permission_id').where('role_id', params.id);
+     permission_ids = permission_ids.map(({permission_id}) => permission_id);
     return view.render(this.$page+"edit", {
       role: role,
-      // relatedPermissions: relatedPermissions,
+      rolesPermission: permission_ids,
       permissions: await Permission.all(),
     });
 

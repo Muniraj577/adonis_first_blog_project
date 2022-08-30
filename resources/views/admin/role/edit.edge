@@ -42,13 +42,17 @@
                           <label for="name">Name&nbsp;<span class="req">*</span></label>
                         </div>
                         <div class="col-md-8">
-                          <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                            value="{{ flashMessages.get('name', '') }}">
+                          <input type="text" name="name" class="form-control"
+                            value="{{ flashMessages.get('name', role.name) }}">
                           <span class="require name text-danger">{{ flashMessages.has('errors.name') ?
                             flashMessages.get('errors.name') : '' }}</span>
                         </div>
                       </div>
                     </div>
+
+{{--  @each(p in  role.$preloaded.permissions)
+  {{ inspect(p.$original) }}
+@end  --}}
                     <div class="form-group">
                       <label for="permissions">Assign Permissions&nbsp;<span class="req">*</span></label>
                       <div class="row">
@@ -56,7 +60,7 @@
                           <div class="row">
                             @each ((permission, index) in permissions)
                             <div class="col-md-4 form-check">
-                              <input type="checkbox" value="{{ permission.id}}" class="form-check-input permission"
+                              <input type="checkbox" value="{{ permission.id}}" {{ rolesPermission.includes(permission.id) ? 'checked' : '' }} class="form-check-input permission"
                                 name="permissions[]">
                               <label for="">{{ permission.name }}</label>
                             </div>
